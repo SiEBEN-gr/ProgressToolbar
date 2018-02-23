@@ -3,6 +3,7 @@ package dev.padam.notifytestproject
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import android.support.v4.util.ArrayMap
 import android.support.v4.util.SimpleArrayMap
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
@@ -42,6 +43,10 @@ object NotifyManager {
 
     private fun registerActivity(activity: Activity) {
         TODO()
+    }
+
+    fun unregister(activity: Activity) {
+        registeredActivities.remove(activity.localClassName)
     }
 
     fun notify(message: String) {

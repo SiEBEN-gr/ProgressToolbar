@@ -9,3 +9,7 @@ import android.app.Activity
 fun Activity.registerForNotifications() {
     NotifyManager.register(this)
 }
+
+fun Activity.unregisterFromNotifications() {
+    NotifyManager.unregister(this)
+}
