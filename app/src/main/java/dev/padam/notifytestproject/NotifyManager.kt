@@ -14,9 +14,11 @@ import android.widget.ProgressBar
  */
 object NotifyManager {
 
+    //todo remove values from registeredActivities
     private val registeredActivities by lazy { SimpleArrayMap<String, Pair<String, Int>>() }
-    private var showingProgressBar = false
-    private var cachedMessage = ""
+    private var isNotificationOn = false
+    private var isProgressBarOn = false
+    private var message = ""
 
     fun init(app: App) {
         app.registerActivityLifecycleCallbacks(lifecycleCallback)
@@ -47,9 +49,7 @@ object NotifyManager {
         if (!isRegisteredActivity(activity)) return
 
         addProgressBarAndMessage(activity, message)
-
-        cachedMessage = message
-        showingProgressBar = true
+        cacheValues(message, true, true)
     }
 
     private fun addProgressBarAndMessage(activity: Activity, message: String) {
@@ -64,21 +64,26 @@ object NotifyManager {
         val (_, resourceId) = registeredActivities.get(activity.localClassName)
         val toolbar = getSupportToolbar(activity, resourceId)
         toolbar.title = message
-        toolbar.addView(ProgressBar(activity), 0)
+        if (!isProgressBarOn) toolbar.addView(ProgressBar(activity), 0)
     }
 
     private fun addProgressBarAndMessageToToolbar(activity: Activity, message: String) {
         TODO()
     }
 
+    private fun cacheValues(message: String, isProgressBarOn: Boolean, isNotificationOn: Boolean) {
+        this.message = message
+        this.isProgressBarOn = isProgressBarOn
+        this.isNotificationOn = isNotificationOn
+    }
+
     fun endNotification() {
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
-        if (!showingProgressBar) return
+        if (!isProgressBarOn) return
 
         restoreToolbar(activity)
-        cachedMessage = ""
-        showingProgressBar = false
+        cacheValues("", false, false)
     }
 
     private fun restoreToolbar(activity: Activity) {
@@ -125,15 +130,13 @@ object NotifyManager {
         override fun onActivityResumed(activity: Activity) {
 //            if (this.activity === activity) return
             this.activity = activity
-            if (isRegisteredActivity(activity) && showingProgressBar) {
-                notify(cachedMessage)
+            if (isRegisteredActivity(activity) && isNotificationOn) {
+                isProgressBarOn = false
+                notify(message)
             }
         }
 
         override fun onActivityPaused(activity: Activity) {
-            if (isRegisteredActivity(activity) && showingProgressBar) {
-                restoreToolbar(activity)
-            }
             if (this.activity === activity) this.activity = null
         }
 
