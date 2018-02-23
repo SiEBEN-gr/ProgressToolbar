@@ -14,6 +14,8 @@ class OtherActivity : AppCompatActivity() {
 
         registerForNotifications()
 
+        setSupportActionBar(toolbar2)
+
         button.setOnClickListener({
             if (flag) {
                 NotifyManager.showProgressBar("boil 'em")
