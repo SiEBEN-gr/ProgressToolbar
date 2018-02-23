@@ -7,5 +7,5 @@ import android.app.Activity
  */
 
 fun Activity.registerForNotifications() {
-    NotifyManager.registerActivity(this)
+    NotifyManager.register(this)
 }
