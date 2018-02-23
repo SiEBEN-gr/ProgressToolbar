@@ -15,6 +15,7 @@ import android.widget.ProgressBar
 object NotifyManager {
 
     private val registeredActivities by lazy { SimpleArrayMap<String, String>() }
+    private var showingProgressBar = false
 
     fun init(app: App) {
         app.registerActivityLifecycleCallbacks(lifecycleCallback)
@@ -31,30 +32,30 @@ object NotifyManager {
 
     fun showProgressBar(message: String) {
         val activity = lifecycleCallback.activity ?: return
-        if (registeredActivities.containsKey(activity.localClassName)) {
+        if (!isRegisteredActivity(activity)) return
 
-            if (activity is AppCompatActivity) {
-                val toolbar = getSupportToolbar(activity)
-                toolbar.title = message
-                toolbar.addView(ProgressBar(activity), 0)
-            } else {
-                TODO()
-            }
+        if (activity is AppCompatActivity) {
+            val toolbar = getSupportToolbar(activity)
+            toolbar.title = message
+            toolbar.addView(ProgressBar(activity), 0)
+        } else {
+            TODO()
         }
+        showingProgressBar = true
     }
 
     fun restoreActionBar() {
         val activity = lifecycleCallback.activity ?: return
-        if (registeredActivities.containsKey(activity.localClassName)) {
+        if (isRegisteredActivity(activity)) return
 
-            if (activity is AppCompatActivity) {
-                val toolbar = getSupportToolbar(activity)
-                toolbar.title = registeredActivities.get(activity.localClassName)
-                toolbar.removeViewAt(0)
-            } else {
-                TODO()
-            }
+        if (activity is AppCompatActivity) {
+            val toolbar = getSupportToolbar(activity)
+            toolbar.title = registeredActivities.get(activity.localClassName)
+            toolbar.removeViewAt(0)
+        } else {
+            TODO()
         }
+        showingProgressBar = false
     }
 
     private fun getSupportToolbar(activity: Activity): Toolbar {
@@ -64,6 +65,10 @@ object NotifyManager {
                 .map { layout.getChildAt(it) }
                 .filterIsInstance<Toolbar>()
                 .first()
+    }
+
+    private fun isRegisteredActivity(activity: Activity): Boolean {
+        return registeredActivities.containsKey(activity.localClassName)
     }
 
     private val lifecycleCallback = object : Application.ActivityLifecycleCallbacks {
