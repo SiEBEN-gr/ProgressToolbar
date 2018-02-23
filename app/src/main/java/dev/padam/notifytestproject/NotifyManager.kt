@@ -10,8 +10,8 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 
 /**
-* Created by Paul Adam on 16/2/2018.
-*/
+ * Created by Paul Adam on 16/2/2018.
+ */
 object NotifyManager {
 
     private val registeredActivities by lazy { SimpleArrayMap<String, String>() }
@@ -36,7 +36,7 @@ object NotifyManager {
             if (activity is AppCompatActivity) {
                 val toolbar = getSupportToolbar(activity)
                 toolbar.title = message
-                toolbar.addView(ProgressBar(activity),0)
+                toolbar.addView(ProgressBar(activity), 0)
             } else {
                 TODO()
             }
@@ -57,7 +57,7 @@ object NotifyManager {
         }
     }
 
-    private fun getSupportToolbar(activity: Activity) : Toolbar {
+    private fun getSupportToolbar(activity: Activity): Toolbar {
         val layout = activity.findViewById<ViewGroup>(android.R.id.content)
                 .getChildAt(0) as ViewGroup
         return (0 until layout.childCount)
