@@ -137,6 +137,9 @@ object NotifyManager {
         }
 
         override fun onActivityPaused(activity: Activity) {
+            if (isRegisteredActivity(activity) && isNotificationOn) {
+                restoreToolbar(activity)
+            }
             if (this.activity === activity) this.activity = null
         }
 
