@@ -18,9 +18,9 @@ class OtherActivity : AppCompatActivity() {
 
         button.setOnClickListener({
             if (flag) {
-                NotifyManager.showProgressBar("boil 'em")
+                NotifyManager.notify("boil 'em")
             } else {
-                NotifyManager.restoreActionBar()
+                NotifyManager.endNotification()
             }
             flag = !flag
         })

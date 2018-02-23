@@ -16,6 +16,7 @@ object NotifyManager {
 
     private val registeredActivities by lazy { SimpleArrayMap<String, Pair<String, Int>>() }
     private var showingProgressBar = false
+    private var cachedMessage = ""
 
     fun init(app: App) {
         app.registerActivityLifecycleCallbacks(lifecycleCallback)
@@ -30,6 +31,7 @@ object NotifyManager {
     }
 
     private fun registerAppCompatActivity(activity: AppCompatActivity) {
+        if (isRegisteredActivity(activity)) return
         val resourceId = getSupportToolbarId(activity)
         val toolbar = getSupportToolbar(activity, resourceId)
         val originalTitle = toolbar.title?.toString() ?: activity.title?.toString() ?: ""
@@ -40,25 +42,45 @@ object NotifyManager {
         TODO()
     }
 
-    fun showProgressBar(message: String) {
+    fun notify(message: String) {
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
-        if (activity is AppCompatActivity) {
-            val (_, resourceId) = registeredActivities.get(activity.localClassName)
-            val toolbar = getSupportToolbar(activity, resourceId)
-            toolbar.title = message
-            toolbar.addView(ProgressBar(activity), 0)
-        } else {
-            TODO()
-        }
+        addProgressBarAndMessage(activity, message)
+
+        cachedMessage = message
         showingProgressBar = true
     }
 
-    fun restoreActionBar() {
+    private fun addProgressBarAndMessage(activity: Activity, message: String) {
+        if (activity is AppCompatActivity) {
+            addProgressBarAndMessageToSupportToolbar(activity, message)
+        } else {
+            addProgressBarAndMessageToToolbar(activity, message)
+        }
+    }
+
+    private fun addProgressBarAndMessageToSupportToolbar(activity: Activity, message: String) {
+        val (_, resourceId) = registeredActivities.get(activity.localClassName)
+        val toolbar = getSupportToolbar(activity, resourceId)
+        toolbar.title = message
+        toolbar.addView(ProgressBar(activity), 0)
+    }
+
+    private fun addProgressBarAndMessageToToolbar(activity: Activity, message: String) {
+        TODO()
+    }
+
+    fun endNotification() {
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
+        restoreToolbar(activity)
+        cachedMessage = ""
+        showingProgressBar = false
+    }
+
+    private fun restoreToolbar(activity: Activity) {
         if (activity is AppCompatActivity) {
             val (originalTitle, resourceId) = registeredActivities.get(activity.localClassName)
             val toolbar = getSupportToolbar(activity, resourceId)
@@ -67,7 +89,6 @@ object NotifyManager {
         } else {
             TODO()
         }
-        showingProgressBar = false
     }
 
     private fun getSupportToolbar(activity: Activity, resourceId: Int): Toolbar {
@@ -90,33 +111,41 @@ object NotifyManager {
 
     private val lifecycleCallback = object : Application.ActivityLifecycleCallbacks {
         var activity: Activity? = null
+            private set
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            this.activity = activity
+//            this.activity = activity
         }
 
         override fun onActivityStarted(activity: Activity) {
-            this.activity = activity
+//            this.activity = activity
         }
 
         override fun onActivityResumed(activity: Activity) {
+//            if (this.activity === activity) return
             this.activity = activity
+            if (isRegisteredActivity(activity) && showingProgressBar) {
+                notify(cachedMessage)
+            }
         }
 
         override fun onActivityPaused(activity: Activity) {
-            this.activity = null
+            if (isRegisteredActivity(activity) && showingProgressBar) {
+                restoreToolbar(activity)
+            }
+            if (this.activity === activity) this.activity = null
         }
 
         override fun onActivityStopped(activity: Activity) {
-            if (this.activity === activity) this.activity = null
+//            if (this.activity === activity) this.activity = null
         }
 
         override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
-            if (this.activity === activity) this.activity = null
+//            if (this.activity === activity) this.activity = null
         }
 
         override fun onActivityDestroyed(activity: Activity) {
-            if (this.activity === activity) this.activity = null
+//            if (this.activity === activity) this.activity = null
         }
     }
 
