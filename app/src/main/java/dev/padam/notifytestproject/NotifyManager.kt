@@ -74,6 +74,7 @@ object NotifyManager {
     fun endNotification() {
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
+        if (!showingProgressBar) return
 
         restoreToolbar(activity)
         cachedMessage = ""
