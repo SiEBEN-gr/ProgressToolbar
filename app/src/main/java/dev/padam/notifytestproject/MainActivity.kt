@@ -7,8 +7,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private var flag = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -17,14 +15,8 @@ class MainActivity : AppCompatActivity() {
 
         registerForNotifications()
 
-        changeTitle.setOnClickListener({
-            if (flag) {
-                NotifyManager.showProgressBar("potato")
-            } else {
-                NotifyManager.restoreActionBar()
-            }
-            flag = !flag
-        })
+        notify.setOnClickListener({ NotifyManager.notify("potato") })
+        endNotify.setOnClickListener({ NotifyManager.endNotification() })
 
         changeActivity.setOnClickListener({
             startActivity(Intent(this, OtherActivity::class.java))

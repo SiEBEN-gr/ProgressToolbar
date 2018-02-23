@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="dev.padam.notifytestproject.MainActivity"
-    tools:layout_editor_absoluteY="81dp">
+    tools:layout_editor_absoluteY="25dp">
 
     <TextView
         android:id="@+id/textView"
@@ -18,24 +18,23 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
-        android:id="@+id/changeTitle"
+        android:id="@+id/notify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="54dp"
-        android:layout_marginEnd="12dp"
-        android:text="Change Title"
+        android:layout_marginBottom="52dp"
+        android:layout_marginStart="37dp"
+        android:text="notify"
         app:layout_constraintBottom_toTopOf="@+id/changeActivity"
-        app:layout_constraintEnd_toEndOf="@+id/changeActivity" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/changeActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="93dp"
+        android:layout_marginTop="52dp"
         android:text="change activity"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/endNotify"
+        app:layout_constraintTop_toBottomOf="@+id/endNotify" />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -46,6 +45,17 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/endNotify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="193dp"
+        android:layout_marginEnd="15dp"
+        android:text="end notify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
