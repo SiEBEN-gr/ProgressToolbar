@@ -21,11 +21,11 @@ object NotifyManager {
     private var isProgressBarOn = false
     private var message = ""
 
-    fun init(app: App) {
+    @JvmStatic fun init(app: App) {
         app.registerActivityLifecycleCallbacks(lifecycleCallback)
     }
 
-    fun register(activity: Activity) {
+    @JvmStatic fun register(activity: Activity) {
         if (activity is AppCompatActivity) {
             registerAppCompatActivity(activity)
         } else {
@@ -45,11 +45,11 @@ object NotifyManager {
         TODO()
     }
 
-    fun unregister(activity: Activity) {
+    @JvmStatic fun unregister(activity: Activity) {
         registeredActivities.remove(activity.localClassName)
     }
 
-    fun notify(message: String) {
+    @JvmStatic fun notify(message: String) {
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
@@ -82,7 +82,7 @@ object NotifyManager {
         this.isNotificationOn = isNotificationOn
     }
 
-    fun endNotification() {
+    @JvmStatic fun endNotification() {
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
         if (!isProgressBarOn) return
