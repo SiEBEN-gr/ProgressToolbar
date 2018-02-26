@@ -17,7 +17,6 @@ class App : Application() {
         super.onCreate()
         instance = this
         ProgressToolbar.init(instance)
-        listOf(2,2,3,4,4,5,6,6,6)
     }
 
 }
