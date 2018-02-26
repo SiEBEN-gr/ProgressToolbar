@@ -12,7 +12,7 @@ import android.widget.ProgressBar
 /**
  * Created by Paul Adam on 16/2/2018.
  */
-object NotifyManager {
+object ProgressToolbar {
 
     private val registeredActivities by lazy { SimpleArrayMap<String, Pair<String, Int>>() }
     private var isNotificationOn = false

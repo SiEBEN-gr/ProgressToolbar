@@ -14,7 +14,7 @@ class OtherActivity : AppCompatActivity() {
 
         registerForNotifications()
 
-        button.setOnClickListener({ NotifyManager.notify("Loading something else.") })
-        button2.setOnClickListener({ NotifyManager.endNotification() })
+        button.setOnClickListener({ ProgressToolbar.notify("Loading something else.") })
+        button2.setOnClickListener({ ProgressToolbar.endNotification() })
     }
 }

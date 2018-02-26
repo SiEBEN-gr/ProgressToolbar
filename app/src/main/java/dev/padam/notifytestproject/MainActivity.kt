@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
 
         registerForNotifications()
 
-        notify.setOnClickListener({ NotifyManager.notify("Loading something.") })
-        endNotify.setOnClickListener({ NotifyManager.endNotification() })
+        notify.setOnClickListener({ ProgressToolbar.notify("Loading something.") })
+        endNotify.setOnClickListener({ ProgressToolbar.endNotification() })
 
         changeActivity.setOnClickListener({
             startActivity(Intent(this, OtherActivity::class.java))

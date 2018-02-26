@@ -16,7 +16,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        NotifyManager.init(instance)
+        ProgressToolbar.init(instance)
         listOf(2,2,3,4,4,5,6,6,6)
     }
 

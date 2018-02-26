@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity
  */
 
 fun AppCompatActivity.registerForNotifications() {
-    NotifyManager.register(this)
+    ProgressToolbar.register(this)
 }
 
 fun AppCompatActivity.unregisterFromNotifications() {
-    NotifyManager.unregister(this)
+    ProgressToolbar.unregister(this)
 }
