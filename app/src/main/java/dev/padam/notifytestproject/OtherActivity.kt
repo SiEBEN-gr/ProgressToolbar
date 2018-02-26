@@ -12,9 +12,9 @@ class OtherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other)
 
-        registerForNotifications()
-
         setSupportActionBar(toolbar2)
+
+        registerForNotifications()
 
         button.setOnClickListener({
             if (flag) {
