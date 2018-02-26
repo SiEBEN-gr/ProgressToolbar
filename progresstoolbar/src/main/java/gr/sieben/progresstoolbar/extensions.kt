@@ -1,4 +1,4 @@
-package dev.padam.notifytestproject
+package gr.sieben.progresstoolbar
 
 import android.support.v7.app.AppCompatActivity
 

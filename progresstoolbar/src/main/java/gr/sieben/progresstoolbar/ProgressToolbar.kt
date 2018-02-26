@@ -1,4 +1,4 @@
-package dev.padam.notifytestproject
+package gr.sieben.progresstoolbar
 
 import android.app.Activity
 import android.app.Application
@@ -19,7 +19,7 @@ object ProgressToolbar {
     private var isProgressBarOn = false
     private var message = ""
 
-    @JvmStatic fun init(app: App) {
+    @JvmStatic fun init(app: Application) {
         app.registerActivityLifecycleCallbacks(lifecycleCallback)
     }
 
@@ -51,9 +51,9 @@ object ProgressToolbar {
     }
 
     private fun cacheValues(message: String, isProgressBarOn: Boolean, isNotificationOn: Boolean) {
-        this.message = message
-        this.isProgressBarOn = isProgressBarOn
-        this.isNotificationOn = isNotificationOn
+        ProgressToolbar.message = message
+        ProgressToolbar.isProgressBarOn = isProgressBarOn
+        ProgressToolbar.isNotificationOn = isNotificationOn
     }
 
     @JvmStatic fun endNotification() {

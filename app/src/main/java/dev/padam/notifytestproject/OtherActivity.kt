@@ -2,6 +2,8 @@ package dev.padam.notifytestproject
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import gr.sieben.progresstoolbar.ProgressToolbar
+import gr.sieben.progresstoolbar.registerForNotifications
 import kotlinx.android.synthetic.main.activity_other.*
 
 class OtherActivity : AppCompatActivity() {

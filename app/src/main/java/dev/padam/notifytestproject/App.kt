@@ -1,6 +1,7 @@
 package dev.padam.notifytestproject
 
 import android.app.Application
+import gr.sieben.progresstoolbar.ProgressToolbar
 
 /**
  * Created by p.adam on 16/2/2018.
