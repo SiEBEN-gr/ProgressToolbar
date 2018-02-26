@@ -6,8 +6,6 @@ import kotlinx.android.synthetic.main.activity_other.*
 
 class OtherActivity : AppCompatActivity() {
 
-    var flag = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other)
@@ -16,13 +14,7 @@ class OtherActivity : AppCompatActivity() {
 
         registerForNotifications()
 
-        button.setOnClickListener({
-            if (flag) {
-                NotifyManager.notify("Loading something else.")
-            } else {
-                NotifyManager.endNotification()
-            }
-            flag = !flag
-        })
+        button.setOnClickListener({ NotifyManager.notify("Loading something else.") })
+        button2.setOnClickListener({ NotifyManager.endNotification() })
     }
 }

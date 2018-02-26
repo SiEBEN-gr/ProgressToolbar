@@ -11,10 +11,10 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="77dp"
-        android:text="change title"
+        android:layout_marginBottom="72dp"
+        android:layout_marginStart="32dp"
+        android:text="notify"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -38,4 +38,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleTextColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="72dp"
+        android:layout_marginEnd="32dp"
+        android:text="end notify"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </android.support.constraint.ConstraintLayout>
