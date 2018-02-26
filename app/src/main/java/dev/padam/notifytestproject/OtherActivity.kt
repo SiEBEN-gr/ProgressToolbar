@@ -18,7 +18,7 @@ class OtherActivity : AppCompatActivity() {
 
         button.setOnClickListener({
             if (flag) {
-                NotifyManager.notify("boil 'em")
+                NotifyManager.notify("Loading something else.")
             } else {
                 NotifyManager.endNotification()
             }

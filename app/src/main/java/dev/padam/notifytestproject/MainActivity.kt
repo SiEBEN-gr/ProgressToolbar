@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         registerForNotifications()
 
-        notify.setOnClickListener({ NotifyManager.notify("potato") })
+        notify.setOnClickListener({ NotifyManager.notify("Loading something.") })
         endNotify.setOnClickListener({ NotifyManager.endNotification() })
 
         changeActivity.setOnClickListener({
