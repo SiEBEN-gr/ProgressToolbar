@@ -14,7 +14,6 @@ import android.widget.ProgressBar
  */
 object NotifyManager {
 
-    //todo remove values from registeredActivities
     private val registeredActivities by lazy { SimpleArrayMap<String, Pair<String, Int>>() }
     private var isNotificationOn = false
     private var isProgressBarOn = false
@@ -123,6 +122,7 @@ object NotifyManager {
         }
 
         override fun onActivityDestroyed(activity: Activity) {
+            if (isRegisteredActivity(activity)) unregister(activity as AppCompatActivity)
         }
     }
 
