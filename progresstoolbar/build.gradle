@@ -2,6 +2,30 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'progresstoolbar'
+
+    publishedGroupId = 'gr.sieben'
+    libraryName = 'progresstoolbar'
+    artifact = 'progresstoolbar'
+
+    libraryDescription = ''
+
+    siteUrl = 'https://github.com/SiEBEN-gr/ProgressToolbar'
+    gitUrl = 'https://github.com/SiEBEN-gr/ProgressToolbar.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'pau1adam'
+    developerName = 'Pavlos Adam'
+    developerEmail = 'pavlosadam@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 26
 
@@ -43,3 +67,6 @@ dependencies {
 repositories {
     mavenCentral()
 }
+
+apply from: 'buildsystem/install.gradle'
+apply from: 'buildsystem/bintray.gradle'
