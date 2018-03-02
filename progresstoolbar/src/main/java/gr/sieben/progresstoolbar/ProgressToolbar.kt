@@ -36,12 +36,12 @@ object ProgressToolbar {
     }
 
     @JvmStatic fun notify(message: String) {
-        cacheValues(message = message,  isNotificationOn = true)
+        cacheState(message = message,  isNotificationOn = true)
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
         addProgressBarAndMessageToToolbar(activity as AppCompatActivity, message)
-        cacheValues(message, true, true)
+        cacheState(isProgressBarOn = true)
     }
 
     private fun addProgressBarAndMessageToToolbar(activity: AppCompatActivity, message: String) {
@@ -51,7 +51,7 @@ object ProgressToolbar {
         if (!isProgressBarOn) toolbar.addView(ProgressBar(activity), 0)
     }
 
-    private fun cacheValues(
+    private fun cacheState(
             message: String = this.message,
             isProgressBarOn: Boolean = this.isProgressBarOn,
             isNotificationOn: Boolean = this.isNotificationOn
@@ -62,12 +62,12 @@ object ProgressToolbar {
     }
 
     @JvmStatic fun endNotification() {
-        cacheValues(message = "", isNotificationOn = false)
+        cacheState(message = "", isNotificationOn = false)
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
         restoreToolbar(activity as AppCompatActivity)
-        cacheValues(isProgressBarOn = false)
+        cacheState(isProgressBarOn = false)
     }
 
     private fun restoreToolbar(activity: AppCompatActivity) {
