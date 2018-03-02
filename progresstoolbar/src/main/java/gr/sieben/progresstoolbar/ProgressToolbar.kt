@@ -36,6 +36,7 @@ object ProgressToolbar {
     }
 
     @JvmStatic fun notify(message: String) {
+        cacheValues(message = message,  isNotificationOn = true)
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
@@ -50,26 +51,30 @@ object ProgressToolbar {
         if (!isProgressBarOn) toolbar.addView(ProgressBar(activity), 0)
     }
 
-    private fun cacheValues(message: String, isProgressBarOn: Boolean, isNotificationOn: Boolean) {
-        ProgressToolbar.message = message
-        ProgressToolbar.isProgressBarOn = isProgressBarOn
-        ProgressToolbar.isNotificationOn = isNotificationOn
+    private fun cacheValues(
+            message: String = this.message,
+            isProgressBarOn: Boolean = this.isProgressBarOn,
+            isNotificationOn: Boolean = this.isNotificationOn
+    ) {
+        this.message = message
+        this.isProgressBarOn = isProgressBarOn
+        this.isNotificationOn = isNotificationOn
     }
 
     @JvmStatic fun endNotification() {
+        cacheValues(message = "", isNotificationOn = false)
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
-        if (!isProgressBarOn) return
 
         restoreToolbar(activity as AppCompatActivity)
-        cacheValues("", false, false)
+        cacheValues(isProgressBarOn = false)
     }
 
     private fun restoreToolbar(activity: AppCompatActivity) {
         val (originalTitle, resourceId) = registeredActivities.get(activity.localClassName)
         val toolbar = getSupportToolbar(activity, resourceId)
         toolbar.title = originalTitle
-        toolbar.removeViewAt(0)
+        if (isProgressBarOn) toolbar.removeViewAt(0)
     }
 
     private fun getSupportToolbar(activity: AppCompatActivity, resourceId: Int): Toolbar {
@@ -102,10 +107,8 @@ object ProgressToolbar {
 
         override fun onActivityResumed(activity: Activity) {
             this.activity = activity
-            if (isRegisteredActivity(activity as AppCompatActivity) && isNotificationOn) {
-                isProgressBarOn = false
-                notify(message)
-            }
+            isProgressBarOn = false
+            if (isRegisteredActivity(activity) && isNotificationOn) notify(message)
         }
 
         override fun onActivityPaused(activity: Activity) {
