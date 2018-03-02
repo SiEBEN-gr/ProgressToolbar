@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "dev.padam.notifytestproject"
+        applicationId "dev.padam.progresstoolbarsample"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
