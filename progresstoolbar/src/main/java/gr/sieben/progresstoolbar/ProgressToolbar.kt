@@ -27,7 +27,7 @@ object ProgressToolbar {
         if (isRegisteredActivity(activity)) return
         val resourceId = getSupportToolbarId(activity)
         val toolbar = getSupportToolbar(activity, resourceId)
-        val originalTitle = toolbar.title?.toString() ?: ""
+        val originalTitle = toolbar.title?.toString() ?: activity.title?.toString() ?: ""
         registeredActivities.put(activity.localClassName, Pair(originalTitle, resourceId))
     }
 
