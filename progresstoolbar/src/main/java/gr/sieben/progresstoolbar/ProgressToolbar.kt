@@ -125,7 +125,9 @@ object ProgressToolbar {
         }
 
         override fun onActivityDestroyed(activity: Activity) {
-            if (isRegisteredActivity(activity)) unregister(activity as AppCompatActivity)
+            // Used to automatically unregister the destroyed activity. Turns out if you exit and
+            // reenter an activity quickly enough this method can end up being called after the
+            // its new instance is created, thus unregistering immediately after its registration.
         }
     }
 
