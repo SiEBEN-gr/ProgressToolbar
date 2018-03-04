@@ -19,10 +19,18 @@ object ProgressToolbar {
     private var isProgressBarOn = false
     private var message = ""
 
+    /**
+     * Register to the applications activity lifecycle callbacks in order to show or hide
+     * notification depending on lifecycle changes.
+     */
     @JvmStatic fun init(app: Application) {
         app.registerActivityLifecycleCallbacks(lifecycleCallback)
     }
 
+    /**
+     * Register activity to receive notifications.
+     * Activity must be appCompat and contain a [Toolbar] in its layout.
+     */
     @JvmStatic fun register(activity: AppCompatActivity) {
         if (isRegisteredActivity(activity)) return
         val resourceId = getSupportToolbarId(activity)
@@ -31,10 +39,15 @@ object ProgressToolbar {
         registeredActivities.put(activity.localClassName, Pair(originalTitle, resourceId))
     }
 
+    /** Unregister activity from notifications.*/
     @JvmStatic fun unregister(activity: AppCompatActivity) {
         registeredActivities.remove(activity.localClassName)
     }
 
+    /**
+     * Display notification in the activity's toolbar.
+     * @param message with replace the title and a [ProgressBar] will appear next to it.
+     */
     @JvmStatic fun notify(message: String) {
         cacheState(message = message,  isNotificationOn = true)
         val activity = lifecycleCallback.activity ?: return
@@ -61,6 +74,10 @@ object ProgressToolbar {
         this.isNotificationOn = isNotificationOn
     }
 
+    /**
+     * Remove notification displayed with [notify].
+     * Original title will be restored and the displayed [ProgressBar] will be removed.
+     */
     @JvmStatic fun endNotification() {
         cacheState(message = "", isNotificationOn = false)
         val activity = lifecycleCallback.activity ?: return
@@ -105,12 +122,19 @@ object ProgressToolbar {
         override fun onActivityStarted(activity: Activity) {
         }
 
+        /**
+         * Cache the current visible activity & show cached notification.
+         * Notifications will not be shown before this method is called.
+         * If [notify] is called earlier in the activity lifecycle the message will be cached and
+         * shown right after the activity resumes.
+         */
         override fun onActivityResumed(activity: Activity) {
             this.activity = activity
             isProgressBarOn = false
             if (isRegisteredActivity(activity) && isNotificationOn) notify(message)
         }
 
+        /** Release reference to cached activity and restore the toolbar to its original state. */
         override fun onActivityPaused(activity: Activity) {
             if (isRegisteredActivity(activity) && isNotificationOn) {
                 restoreToolbar(activity as AppCompatActivity)
