@@ -49,7 +49,7 @@ object ProgressToolbar {
      * @param message with replace the title and a [ProgressBar] will appear next to it.
      */
     @JvmStatic fun notify(message: String) {
-        cacheState(message = message,  isNotificationOn = true)
+        cacheState(message = message, isNotificationOn = true)
         val activity = lifecycleCallback.activity ?: return
         if (!isRegisteredActivity(activity)) return
 
@@ -65,9 +65,9 @@ object ProgressToolbar {
     }
 
     private fun cacheState(
-            message: String = this.message,
-            isProgressBarOn: Boolean = this.isProgressBarOn,
-            isNotificationOn: Boolean = this.isNotificationOn
+        message: String = this.message,
+        isProgressBarOn: Boolean = this.isProgressBarOn,
+        isNotificationOn: Boolean = this.isNotificationOn
     ) {
         this.message = message
         this.isProgressBarOn = isProgressBarOn
@@ -100,12 +100,12 @@ object ProgressToolbar {
 
     private fun getSupportToolbarId(activity: AppCompatActivity): Int {
         val layout = activity.findViewById<ViewGroup>(android.R.id.content)
-                .getChildAt(0) as ViewGroup
+            .getChildAt(0) as ViewGroup
         return (0 until layout.childCount)
-                .map { layout.getChildAt(it) }
-                .filterIsInstance<Toolbar>()
-                .map { it.id }
-                .first()
+            .map { layout.getChildAt(it) }
+            .filterIsInstance<Toolbar>()
+            .map { it.id }
+            .first()
     }
 
     private fun isRegisteredActivity(activity: Activity): Boolean {
