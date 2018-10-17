@@ -2,10 +2,12 @@ package gr.sieben.progresstoolbar
 
 import android.app.Activity
 import android.app.Application
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.util.SimpleArrayMap
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.AttributeSet
 import android.view.ViewGroup
 import android.widget.ProgressBar
 
@@ -18,6 +20,15 @@ object ProgressToolbar {
     private var isNotificationOn = false
     private var isProgressBarOn = false
     private var message = ""
+
+    /** Only works for android version >= 21. */
+    var attrs: AttributeSet? = null
+
+    /** Only works for android version >= 21. */
+    var defStyleAttr: Int = android.R.attr.progressBarStyle
+
+    /** Only works for android version >= 21. */
+    var defStyleRes: Int = 0
 
     /**
      * Register to the applications activity lifecycle callbacks in order to show or hide
@@ -61,7 +72,7 @@ object ProgressToolbar {
         val (_, resourceId) = registeredActivities.get(activity.localClassName)
         val toolbar = getSupportToolbar(activity, resourceId)
         toolbar.title = message
-        if (!isProgressBarOn) toolbar.addView(ProgressBar(activity), 0)
+        if (!isProgressBarOn) toolbar.addView(getProgressBar(activity), 0)
     }
 
     private fun cacheState(
@@ -110,6 +121,12 @@ object ProgressToolbar {
 
     private fun isRegisteredActivity(activity: Activity): Boolean {
         return registeredActivities.containsKey(activity.localClassName)
+    }
+
+    private fun getProgressBar(activity: AppCompatActivity) = if (Build.VERSION.SDK_INT >= 21) {
+        ProgressBar(activity, attrs, defStyleAttr, defStyleRes)
+    } else {
+        ProgressBar(activity)
     }
 
     private val lifecycleCallback = object : Application.ActivityLifecycleCallbacks {
