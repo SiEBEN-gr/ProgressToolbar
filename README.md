@@ -55,7 +55,7 @@ Download
 
 ```groovy
 dependencies {
-    implementation 'gr.sieben:progresstoolbar:1.0.1'
+    implementation 'gr.sieben:progresstoolbar:1.1.0'
 }
 ```
 
