@@ -131,11 +131,9 @@ object ProgressToolbar {
         var activity: Activity? = null
             private set
 
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        }
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
 
-        override fun onActivityStarted(activity: Activity) {
-        }
+        override fun onActivityStarted(activity: Activity) = Unit
 
         /**
          * Cache the current visible activity & show cached notification.
@@ -157,11 +155,9 @@ object ProgressToolbar {
             if (this.activity === activity) this.activity = null
         }
 
-        override fun onActivityStopped(activity: Activity) {
-        }
+        override fun onActivityStopped(activity: Activity) = Unit
 
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {
-        }
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) = Unit
 
         override fun onActivityDestroyed(activity: Activity) {
             // Used to automatically unregister the destroyed activity. Turns out if you exit and
