@@ -21,10 +21,8 @@ object ProgressToolbar {
     private var isProgressBarOn = false
     private var message = ""
 
-    /** Only works for android version >= 21. */
     @JvmStatic var attrs: AttributeSet? = null
 
-    /** Only works for android version >= 21. */
     @JvmStatic var defStyleAttr: Int = android.R.attr.progressBarStyle
 
     /** Only works for android version >= 21. */
@@ -126,7 +124,7 @@ object ProgressToolbar {
     private fun getProgressBar(activity: AppCompatActivity) = if (Build.VERSION.SDK_INT >= 21) {
         ProgressBar(activity, attrs, defStyleAttr, defStyleRes)
     } else {
-        ProgressBar(activity)
+        ProgressBar(activity, attrs, defStyleAttr)
     }
 
     private val lifecycleCallback = object : Application.ActivityLifecycleCallbacks {
