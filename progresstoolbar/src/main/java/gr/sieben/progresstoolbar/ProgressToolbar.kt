@@ -22,13 +22,13 @@ object ProgressToolbar {
     private var message = ""
 
     /** Only works for android version >= 21. */
-    var attrs: AttributeSet? = null
+    @JvmStatic var attrs: AttributeSet? = null
 
     /** Only works for android version >= 21. */
-    var defStyleAttr: Int = android.R.attr.progressBarStyle
+    @JvmStatic var defStyleAttr: Int = android.R.attr.progressBarStyle
 
     /** Only works for android version >= 21. */
-    var defStyleRes: Int = 0
+    @JvmStatic var defStyleRes: Int = 0
 
     /**
      * Register to the applications activity lifecycle callbacks in order to show or hide
